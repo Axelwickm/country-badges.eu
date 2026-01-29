@@ -495,35 +495,57 @@
 			<div class="controls">
 				<label for="countrySelect">Select Country:</label>
 				<select id="countrySelect">
-					<option value="at">Austria</option>
-					<option value="be">Belgium</option>
-					<option value="bg">Bulgaria</option>
-					<option value="cy">Cyprus</option>
-					<option value="cz">Czech Republic</option>
-					<option value="dk">Denmark</option>
-					<option value="ee">Estonia</option>
-					<option value="fi">Finland</option>
-					<option value="fr">France</option>
-					<option value="de">Germany</option>
-					<option value="gr">Greece</option>
-					<option value="hr">Croatia</option>
-					<option value="hu">Hungary</option>
-					<option value="ie">Ireland</option>
-					<option value="it">Italy</option>
-					<option value="lv">Latvia</option>
-					<option value="lt">Lithuania</option>
-					<option value="lu">Luxembourg</option>
-					<option value="mt">Malta</option>
-					<option value="nl">Netherlands</option>
-					<option value="pl">Poland</option>
-					<option value="pt">Portugal</option>
-					<option value="ro">Romania</option>
-					<option value="sk">Slovakia</option>
-					<option value="si">Slovenia</option>
-					<option value="es">Spain</option>
-					<option value="se">Sweden</option>
-
-					<option value="gl">Greenland</option>
+					<optgroup label="European Union">
+						<option value="at">Austria</option>
+						<option value="be">Belgium</option>
+						<option value="bg">Bulgaria</option>
+						<option value="hr">Croatia</option>
+						<option value="cy">Cyprus</option>
+						<option value="cz">Czechia</option>
+						<option value="dk">Denmark</option>
+						<option value="ee">Estonia</option>
+						<option value="fi">Finland</option>
+						<option value="fr">France</option>
+						<option value="de">Germany</option>
+						<option value="gr">Greece</option>
+						<option value="hu">Hungary</option>
+						<option value="ie">Ireland</option>
+						<option value="it">Italy</option>
+						<option value="lv">Latvia</option>
+						<option value="lt">Lithuania</option>
+						<option value="lu">Luxembourg</option>
+						<option value="mt">Malta</option>
+						<option value="nl">Netherlands</option>
+						<option value="pl">Poland</option>
+						<option value="pt">Portugal</option>
+						<option value="ro">Romania</option>
+						<option value="sk">Slovakia</option>
+						<option value="si">Slovenia</option>
+						<option value="es">Spain</option>
+						<option value="se">Sweden</option>
+						<option value="gl">Greenland</option>
+					</optgroup>
+					<optgroup label="Council of Europe / Other">
+						<option value="al">Albania</option>
+						<option value="ad">Andorra</option>
+						<option value="am">Armenia</option>
+						<option value="az">Azerbaijan</option>
+						<option value="ba">Bosnia and Herzegovina</option>
+						<option value="ge">Georgia</option>
+						<option value="is">Iceland</option>
+						<option value="li">Liechtenstein</option>
+						<option value="md">Moldova</option>
+						<option value="mc">Monaco</option>
+						<option value="me">Montenegro</option>
+						<option value="mk">North Macedonia</option>
+						<option value="no">Norway</option>
+						<option value="rs">Serbia</option>
+						<option value="sm">San Marino</option>
+						<option value="ch">Switzerland</option>
+						<option value="tr">Türkiye</option>
+						<option value="ua">Ukraine</option>
+						<option value="gb">United Kingdom</option>
+					</optgroup>
 				</select>
 
 				<datalist id="countryOptions"></datalist>
@@ -572,6 +594,7 @@
 					<button id="aboutModalClose" class="modal-close" type="button" aria-label="Close">×</button>
 					<h2>About EU Country Badge</h2>
 					<p>This tool allows you to design and export custom European Union country badges. These badges are perfect for showing product origins, EU-based services, or simply celebrating European identity on websites and apps.</p>
+					<p>The project includes flags for all European Union member states and all Council of Europe member states.</p>
 					<p>You can export them as <strong>SVG</strong>
 						for resolution independence, <strong>PNG</strong>
 						for general use, or as a direct <strong>Embed code</strong>.</p>
@@ -662,8 +685,10 @@
 					gr: { offsetX: 15, bgColor: "#0D5EAF" },
 					ie: { scaleX: 0.8, scaleY: 1.0, bgColor: "#ffffff" },
 					si: { offsetX: 34 },
-					gl: { offsetX: 23 }
-					};
+					gl: { offsetX: 23 },
+          li: { offsetX: 40 },
+          tr: { offsetX: 10 },
+        };
 					
 					let flipToken = 0;
 					let rotationAccum = 0;
@@ -823,6 +848,13 @@
 										function updateFlag() {
 											const countryCode = countrySelect.value;
 											const countryName = countrySelect.options[countrySelect.selectedIndex].text;
+											
+											const selectedOption = countrySelect.options[countrySelect.selectedIndex];
+											const isCoE = selectedOption.parentElement.label === "Council of Europe / Other";
+											const titleText = isCoE ? "CoE Country Badges" : "EU Country Badges";
+											document.title = titleText;
+											document.querySelector("h1").textContent = titleText;
+											
 											searchInput.value = countryName;
 											
 											const token = ++flipToken;
@@ -1405,10 +1437,10 @@
 																													addSwipeListener(switcher, ["input", "button"]);
 																													addSwipeListener(badge);
 																													
-																													// Init
-																													const randomIndex = Math.floor(Math.random() * countrySelect.options.length);
-																													countrySelect.selectedIndex = randomIndex;
-																													updateFlag();
-		</script>
+																																// Init
+																																// Only select from EU countries (first 27 options)
+																																const randomIndex = Math.floor(Math.random() * 27);
+																																countrySelect.selectedIndex = randomIndex;
+																																updateFlag();		</script>
 	</body>
 </html>

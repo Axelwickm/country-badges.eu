@@ -32,6 +32,7 @@ FLAGS = [
     "si",
     "es",
     "se",
+    # Council of Europe / Other countries
     "al",
     "ba",
     "ge",
@@ -42,9 +43,19 @@ FLAGS = [
     "tr",
     "ua",
     "gl",
+    "ad",
+    "am",
+    "az",
+    "is",
+    "li",
+    "mc",
+    "no",
+    "sm",
+    "ch",
+    "gb",
 ]
 
-OUT_DIR = Path("assets/flags")
+OUT_DIR = Path("site/assets/flags")
 OUT_DIR.mkdir(parents=True, exist_ok=True)
 
 BASE_URL = "https://flagcdn.com"

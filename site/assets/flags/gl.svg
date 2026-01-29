@@ -1,12 +1,1 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="900" height="600">
-	<rect width="900" height="300" fill="#fff"/>
-	<rect y="300" width="900" height="300" fill="#C8102E"/>
-	<clipPath id="top">
-		<rect width="900" height="300"/>
-	</clipPath>
-	<clipPath id="bottom">
-		<rect y="300" width="900" height="300"/>
-	</clipPath>
-	<circle cx="350" cy="300" r="200" fill="#C8102E" clip-path="url(#top)"/>
-	<circle cx="350" cy="300" r="200" fill="#fff" clip-path="url(#bottom)"/>
-</svg>
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="600" viewBox="0 0 18 12"><path fill="#fff" d="M0 0h18v12H0z"/><path fill="#C8102E" d="M0 6h18v6H0zm3 0a4 4 0 0 0 8 0 4 4 0 0 0-8 0"/></svg>

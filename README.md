@@ -7,6 +7,8 @@ Making "Buy European" easy and recognizable.
 ## Purpose
 This project provides a unified icon set to help show European identity and product origin. The design features the European Union flag surrounded by a border of specific national colors, making the origin instantly recognizable at a glance.
 
+The project includes flags for all European Union member states and all Council of Europe member states.
+
 These icons are intended for use on shops, websites, and packaging to help consumers support local and European products.
 
 ## Live Demo
