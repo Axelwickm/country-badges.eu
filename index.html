@@ -1,0 +1,1410 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+		<title>EU Country Badge</title>
+		<link rel="icon" type="image/png" href="assets/favicon-32.png?v=1">
+		<link rel="shortcut icon" type="image/png" href="assets/favicon-32.png?v=1">
+
+		<!-- SEO and Social Sharing -->
+		<meta name="description" content="A unified icon set to help show European identity and product origin. Making 'Buy European' easy and recognizable.">
+		
+		<!-- Open Graph / Facebook -->
+		<meta property="og:type" content="website">
+		<meta property="og:url" content="http://country-badges.eu/">
+		<meta property="og:title" content="EU Country Badge - Show Your European Identity">
+		<meta property="og:description" content="A unified icon set to help show European identity and product origin. Making 'Buy European' easy and recognizable.">
+		<meta property="og:image" content="http://country-badges.eu/assets/og-image.png">
+
+		<!-- Twitter -->
+		<meta property="twitter:card" content="summary_large_image">
+		<meta property="twitter:url" content="http://country-badges.eu/">
+		<meta property="twitter:title" content="EU Country Badge - Show Your European Identity">
+		<meta property="twitter:description" content="A unified icon set to help show European identity and product origin. Making 'Buy European' easy and recognizable.">
+		<meta property="twitter:image" content="http://country-badges.eu/assets/og-image.png">
+
+		<style>
+			:root {
+				--eu-blue: #003399;
+				--eu-gold: #ffcc00;
+				--white: #ffffff;
+				--bg-gray: #f8f9fa;
+			}
+			
+			body {
+				font-family: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
+				background-color: var(--white);
+				display: flex;
+				flex-direction: column;
+				align-items: center;
+				justify-content: center;
+				min-height: 100vh;
+				margin: 0;
+				color: #333;
+				overflow-x: hidden;
+			}
+			
+			.container {
+				text-align: center;
+				padding: 2rem;
+				border-radius: 20px;
+				display: flex;
+				flex-direction: column;
+				align-items: center;
+			}
+			
+			h1 {
+				font-weight: 300;
+				letter-spacing: -1px;
+				margin-bottom: 2rem;
+				font-family: Georgia, Garamond, serif, Palatino;
+			}
+			
+			.controls {
+				background: var(--bg-gray);
+				padding: 0.75rem;
+				border-radius: 999px;
+				display: flex;
+				flex-direction: column;
+				align-items: center;
+				gap: 0.75rem;
+				box-shadow: 0 10px 24px rgba(0, 0, 0, 0.1);
+			}
+			
+			select {
+				position: absolute;
+				left: -9999px;
+			}
+			
+			.controls label {
+				position: absolute;
+				left: -9999px;
+			}
+			
+			.country-switcher {
+				display: inline-flex;
+				align-items: center;
+				gap: 0.75rem;
+				background: #fff;
+				border: 1px solid #e2e6ea;
+				border-radius: 999px;
+				padding: 8px 14px;
+				box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.8);
+				user-select: none;
+				touch-action: pan-y;
+			}
+			
+			.country-switcher input {
+				border: none;
+				padding: 0;
+				font-size: 16px;
+				font-weight: 500;
+				background: transparent;
+				width: 140px;
+				min-width: 90px;
+				text-align: center;
+			}
+			
+			.country-switcher input:focus {
+				outline: none;
+			}
+			
+			.switcher-btn {
+				width: 32px;
+				height: 32px;
+				border-radius: 50%;
+				border: none;
+				background: #f1f3f5;
+				color: #333;
+				cursor: pointer;
+				font-size: 18px;
+				line-height: 1;
+				display: inline-flex;
+				align-items: center;
+				justify-content: center;
+				transition: background 0.2s ease, transform 0.2s ease;
+			}
+			
+			.switcher-btn:hover {
+				background: #e7eaee;
+			}
+			
+			.switcher-btn:active {
+				transform: scale(0.96);
+			}
+			
+			/* Export panel layout */
+			.export-panel {
+				margin-top: 1.5rem;
+				display: flex;
+				flex-direction: column;
+				align-items: center;
+				gap: 1.25rem;
+				width: 100%;
+				position: relative;
+			}
+			
+			.export-group {
+				position: relative;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+			}
+			
+			.export-toggle,
+			.export-menu button {
+				border: 1px solid #e2e6ea;
+				background: #fff;
+				color: #333;
+				padding: 0.75rem 1.5rem;
+				border-radius: 999px;
+				font-weight: 500;
+				cursor: pointer;
+				box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+				transition: all 0.2s ease;
+				white-space: nowrap;
+			}
+			
+			.export-toggle:hover,
+			.export-menu button:hover {
+				border-color: #ced4da;
+				box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+				transform: translateY(-1px);
+			}
+			
+			.export-toggle:active,
+			.export-menu button:active {
+				transform: translateY(0);
+			}
+			
+			.export-toggle {
+				z-index: 2;
+			}
+			
+			.export-menu {
+				display: flex;
+				flex-direction: row;
+				gap: 0.5rem;
+				margin-top: 0.5rem;
+				justify-content: center;
+				width: 100%;
+			}
+			
+			.export-extensions {
+				display: flex;
+				flex-direction: column;
+				gap: 0.6rem;
+				opacity: 0;
+				transform: translateY(-10px);
+				pointer-events: none;
+				transition: all 0.25s ease;
+			}
+			
+			.export-extensions.visible {
+				opacity: 1;
+				transform: translateY(0);
+				pointer-events: auto;
+			}
+			
+			.export-checkbox {
+				display: inline-flex;
+				align-items: center;
+				gap: 0.6rem;
+				padding: 0.5rem 1rem;
+				border-radius: 999px;
+				border: 1px solid #e2e6ea;
+				background: #fff;
+				font-size: 0.9rem;
+				box-shadow: 0 2px 6px rgba(0, 0, 0, 0.03);
+				white-space: nowrap;
+				cursor: pointer;
+				user-select: none;
+				transition: all 0.2s ease;
+			}
+			
+			.export-checkbox:hover {
+				border-color: #ced4da;
+				background: #fdfdfd;
+			}
+			
+			.export-checkbox input[type="checkbox"] {
+				width: 16px;
+				height: 16px;
+				margin: 0;
+				cursor: pointer;
+			}
+			
+			.modal {
+				position: fixed;
+				inset: 0;
+				display: none;
+				align-items: center;
+				justify-content: center;
+				background: rgba(0, 0, 0, 0.4);
+				z-index: 50;
+			}
+			
+			.modal.visible {
+				display: flex;
+			}
+			
+			.modal-content {
+				background: #fff;
+				padding: 2rem;
+				border-radius: 16px;
+				text-align: left;
+				max-width: 480px;
+				width: calc(100% - 2rem);
+				box-shadow: 0 30px 60px rgba(0, 0, 0, 0.25);
+				position: relative;
+			}
+			
+			.modal-content h2 {
+				margin-top: 0;
+				font-size: 1.2rem;
+				margin-bottom: 1rem;
+			}
+			
+			.modal-content textarea {
+				width: 100%;
+				min-height: 120px;
+				resize: none;
+				border: 1px solid #dfe2e6;
+				border-radius: 12px;
+				padding: 0.75rem;
+				font-family: "Inter", sans-serif;
+				font-size: 0.95rem;
+				background: #f8f9fa;
+				box-sizing: border-box;
+				margin-bottom: 1.5rem;
+			}
+			
+			.about-btn {
+				position: fixed;
+				right: 20px;
+				bottom: 20px;
+				background: transparent;
+				border: none;
+				color: #999;
+				cursor: pointer;
+				font-size: 0.85rem;
+				text-decoration: none;
+				transition: color 0.2s ease;
+				z-index: 100;
+			}
+			
+			.about-btn:hover {
+				color: #555;
+				text-decoration: underline;
+			}
+			
+			.modal-content p {
+				line-height: 1.6;
+				color: #444;
+			}
+			
+			.modal-content a {
+				color: var(--eu-blue);
+				text-decoration: none;
+				font-weight: 500;
+			}
+			
+			.modal-content a:hover {
+				text-decoration: underline;
+			}
+			
+			#copyEmbed {
+				display: block;
+				width: 100%;
+				background: var(--eu-blue);
+				color: white;
+				border: none;
+				padding: 0.85rem;
+				border-radius: 12px;
+				font-weight: 600;
+				font-size: 1rem;
+				cursor: pointer;
+				transition: all 0.2s ease;
+				box-shadow: 0 4px 12px rgba(0, 51, 153, 0.2);
+			}
+			
+			#copyEmbed:hover {
+				background: #0044cc;
+				transform: translateY(-1px);
+				box-shadow: 0 6px 16px rgba(0, 51, 153, 0.3);
+			}
+			
+			#copyEmbed:active {
+				transform: translateY(0);
+			}
+			
+			.modal-close {
+				position: absolute;
+				top: 12px;
+				right: 12px;
+				border: none;
+				background: transparent;
+				font-size: 1.5rem;
+				color: #555;
+				cursor: pointer;
+			}
+		</style>
+
+		<style id="badgeStyles">
+			.badge-stage {
+				perspective: 1200px;
+				margin-bottom: 2rem;
+			}
+			
+			.badge-preview {
+				position: relative;
+				width: 220px;
+				height: 220px;
+				background-color: var(--eu-blue);
+				border-radius: 50%;
+				border: 8px solid var(--white);
+				box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				margin-bottom: 0;
+				transform-style: preserve-3d;
+				backface-visibility: visible;
+				transform: rotateX(0deg);
+				overflow: hidden;
+				touch-action: pan-y;
+			}
+			
+			.badge-preview::before,
+			.badge-preview::after {
+				content: "";
+				position: absolute;
+				inset: 3px;
+				border-radius: 50%;
+				pointer-events: none;
+			}
+			
+			.badge-preview::after {
+				background: conic-gradient(
+				from 0deg,
+				rgba(255, 255, 255, 0) 0deg,
+				rgba(255, 255, 255, 0) 45deg,
+				rgba(255, 255, 255, 0.35) 90deg,
+				rgba(255, 255, 255, 0) 135deg,
+				rgba(255, 255, 255, 0) 210deg,
+				rgba(255, 255, 255, 0.35) 270deg,
+				rgba(255, 255, 255, 0) 330deg,
+				rgba(255, 255, 255, 0) 360deg
+				);
+				-webkit-mask: radial-gradient(
+				farthest-side,
+				transparent calc(100% - 5px),
+				#000 calc(100% - 5px),
+				#000 calc(100% - 1px),
+				transparent 100%
+				);
+				mask: radial-gradient(
+				farthest-side,
+				transparent calc(100% - 5px),
+				#000 calc(100% - 5px),
+				#000 calc(100% - 1px),
+				transparent 100%
+				);
+			}
+			
+			.stars-container {
+				position: absolute;
+				width: 100%;
+				height: 100%;
+			}
+			
+			.star {
+				position: absolute;
+				color: var(--eu-gold);
+				font-size: 26px;
+				left: 50%;
+				top: 50%;
+				transform-origin: 0 90px;
+			}
+			
+			.country-circle {
+				position: relative;
+				width: 140px;
+				height: 140px;
+				background-color: white;
+				border-radius: 50%;
+				border: 6px solid var(--white);
+				z-index: 10;
+				overflow: hidden;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+			}
+			
+			.country-circle img {
+				height: 100%;
+				width: auto; /* Allow image to be wider than container */
+				max-width: none; /* Prevent constraint */
+				object-fit: cover; /* Fallback */
+				filter: saturate(1.05);
+				opacity: 0;
+				transition: opacity 0.25s ease, transform 0.25s ease;
+				position: absolute;
+				left: 50%;
+				top: 50%;
+				transform: translate(-50%, -50%); /* Center by default */
+			}
+			
+			.country-circle img.visible {
+				opacity: 1;
+			}
+			
+			.badge-preview.coin-flip {
+				animation: coinFlip 0.9s cubic-bezier(0.68, -0.55, 0.27, 1.55) forwards;
+			}
+			
+			@keyframes coinFlip {
+				0% {
+					transform: rotateY(var(--flip-rotation-start, 0deg));
+				}
+				100% {
+					transform: rotateY(var(--flip-rotation-end, 360deg));
+				}
+			}
+		</style>
+	</head>
+
+	<body>
+		<div class="container">
+			<h1>EU Country Badge</h1>
+
+			<div class="badge-stage">
+				<div class="badge-preview" id="badge">
+					<div class="stars-container" id="starsRing"></div>
+					<div class="country-circle">
+						<img id="countryFlag" src="assets/flags/fr.svg" alt="Country Flag">
+					</div>
+				</div>
+			</div>
+
+			<div class="controls">
+				<label for="countrySelect">Select Country:</label>
+				<select id="countrySelect">
+					<option value="at">Austria</option>
+					<option value="be">Belgium</option>
+					<option value="bg">Bulgaria</option>
+					<option value="cy">Cyprus</option>
+					<option value="cz">Czech Republic</option>
+					<option value="dk">Denmark</option>
+					<option value="ee">Estonia</option>
+					<option value="fi">Finland</option>
+					<option value="fr">France</option>
+					<option value="de">Germany</option>
+					<option value="gr">Greece</option>
+					<option value="hr">Croatia</option>
+					<option value="hu">Hungary</option>
+					<option value="ie">Ireland</option>
+					<option value="it">Italy</option>
+					<option value="lv">Latvia</option>
+					<option value="lt">Lithuania</option>
+					<option value="lu">Luxembourg</option>
+					<option value="mt">Malta</option>
+					<option value="nl">Netherlands</option>
+					<option value="pl">Poland</option>
+					<option value="pt">Portugal</option>
+					<option value="ro">Romania</option>
+					<option value="sk">Slovakia</option>
+					<option value="si">Slovenia</option>
+					<option value="es">Spain</option>
+					<option value="se">Sweden</option>
+
+					<option value="gl">Greenland</option>
+				</select>
+
+				<datalist id="countryOptions"></datalist>
+
+				<div class="country-switcher" id="countrySwitcher">
+					<button class="switcher-btn" id="prevCountry" type="button" aria-label="Previous country">‹</button>
+					<input id="countrySearch" list="countryOptions" placeholder="Search country" autocomplete="off" aria-label="Search countries">
+					<button class="switcher-btn" id="nextCountry" type="button" aria-label="Next country">›</button>
+				</div>
+			</div>
+
+			<div class="export-panel" id="exportPanel">
+				<button id="exportToggle" class="export-toggle" type="button">Export</button>
+
+				<div class="export-extensions" id="exportExtrasControl" aria-hidden="true">
+					<label class="export-checkbox">
+						<input id="embedAnimate" type="checkbox">
+						<span>Include animation</span>
+					</label>
+					<label class="export-checkbox">
+						<input id="includeShadow" type="checkbox" checked>
+						<span>Include shadow</span>
+					</label>
+
+					<div class="export-menu" id="exportMenu">
+						<button type="button" id="exportSvg">SVG</button>
+						<button type="button" id="exportPng">PNG</button>
+						<button type="button" id="exportEmbed">Embed</button>
+					</div>
+				</div>
+			</div>
+
+			<div class="modal" id="exportModal" aria-hidden="true" role="dialog" aria-modal="true">
+				<div class="modal-content" role="document">
+					<button id="exportModalClose" class="modal-close" type="button" aria-label="Close">×</button>
+					<h2>Embed Code</h2>
+					<textarea id="exportEmbedCode" readonly></textarea>
+					<button id="copyEmbed" type="button">Copy</button>
+				</div>
+			</div>
+
+			<button id="aboutToggle" class="about-btn" type="button">About</button>
+
+			<div class="modal" id="aboutModal" aria-hidden="true" role="dialog" aria-modal="true">
+				<div class="modal-content" role="document">
+					<button id="aboutModalClose" class="modal-close" type="button" aria-label="Close">×</button>
+					<h2>About EU Country Badge</h2>
+					<p>This tool allows you to design and export custom European Union country badges. These badges are perfect for showing product origins, EU-based services, or simply celebrating European identity on websites and apps.</p>
+					<p>You can export them as <strong>SVG</strong>
+						for resolution independence, <strong>PNG</strong>
+						for general use, or as a direct <strong>Embed code</strong>.</p>
+					<hr style="border: 0; border-top: 1px solid #eee; margin: 1.5rem 0;">
+					<p style="font-size: 0.9rem; color: #666;">
+						Original idea by <a href="https://www.reddit.com/r/BuyFromEU/comments/1qmhd4g/comment/o1n49l6/?context=3" target="_blank" rel="noopener">u/Veldhousen</a><br>
+						By Axel Wickman<br>
+						<a href="https://www.linkedin.com/in/axel-wickman/" target="_blank" rel="noopener">LinkedIn</a>
+						<a href="https://github.com/Axelwickm" target="_blank" rel="noopener">GitHub</a>
+					</p>
+				</div>
+			</div>
+		</div>
+
+		<script>
+			// Stars
+			const starsRing = document.getElementById("starsRing");
+			for (let i = 0; i < 12; i++) {
+				const star = document.createElement("div");
+				star.className = "star";
+				star.innerHTML = "★";
+				const angle = i * 30;
+				star.style.transform = `translate(-50%, -50%) rotate(${angle}deg) translateY(-90px) rotate(-${angle}deg)`;
+				starsRing.appendChild(star);
+			}
+			
+			const countrySelect = document.getElementById("countrySelect");
+			const searchInput = document.getElementById("countrySearch");
+			const datalist = document.getElementById("countryOptions");
+			const badge = document.getElementById("badge");
+			const flagImg = document.getElementById("countryFlag");
+			
+			const exportSvgBtn = document.getElementById("exportSvg");
+			const exportPngBtn = document.getElementById("exportPng");
+			const exportEmbedBtn = document.getElementById("exportEmbed");
+			const exportToggle = document.getElementById("exportToggle");
+			const exportMenu = document.getElementById("exportMenu");
+			const exportModal = document.getElementById("exportModal");
+			const exportModalClose = document.getElementById("exportModalClose");
+			const embedTextarea = document.getElementById("exportEmbedCode");
+			const embedAnimateToggle = document.getElementById("embedAnimate");
+			const includeShadowToggle = document.getElementById("includeShadow");
+			const copyEmbedBtn = document.getElementById("copyEmbed");
+			const exportExtrasControl = document.getElementById("exportExtrasControl");
+			const exportPanel = document.getElementById("exportPanel");
+			
+			const aboutToggle = document.getElementById("aboutToggle");
+			const aboutModal = document.getElementById("aboutModal");
+			const aboutModalClose = document.getElementById("aboutModalClose");
+			
+			const countryOptions = Array.from(countrySelect.options);
+			
+			// Datalist
+			countryOptions.forEach((option) => {
+				const entry = document.createElement("option");
+				entry.value = option.text;
+				datalist.appendChild(entry);
+				});
+				
+				// Cache with LRU eviction (also revokes blob URLs)
+				const CACHE_LIMIT = 20;
+				const imageCache = new Map(); // code -> { url, mime, blob, lastUsed }
+				function touchCache(code) {
+					const entry = imageCache.get(code);
+					if (entry) entry.lastUsed = Date.now();
+				}
+				function evictIfNeeded() {
+					if (imageCache.size <= CACHE_LIMIT) return;
+					let oldestCode = null;
+					let oldestTs = Infinity;
+					for (const [code, entry] of imageCache.entries()) {
+						if (entry.lastUsed < oldestTs) {
+							oldestTs = entry.lastUsed;
+							oldestCode = code;
+						}
+					}
+					if (!oldestCode) return;
+					const entry = imageCache.get(oldestCode);
+					if (entry?.url) URL.revokeObjectURL(entry.url);
+					imageCache.delete(oldestCode);
+				}
+				
+				const countryOverrides = {
+					sk: { offsetX: 10 },
+					cy: { scale: 0.85, offsetX: -7 },
+					fi: { bgColor: "#ffffff" },
+					gr: { offsetX: 15, bgColor: "#0D5EAF" },
+					ie: { scaleX: 0.8, scaleY: 1.0, bgColor: "#ffffff" },
+					si: { offsetX: 34 },
+					gl: { offsetX: 23 }
+					};
+					
+					let flipToken = 0;
+					let rotationAccum = 0;
+					let currentAssetEntry = null;
+					let currentCountryName = "";
+					const flipDurationMs = 800;
+					
+					function triggerFlip() {
+						const direction = Math.random() > 0.5 ? 1 : -1;
+						const previousRotation = rotationAccum;
+						rotationAccum += direction * 360;
+						badge.style.setProperty("--flip-rotation-start", `${previousRotation}deg`);
+						badge.style.setProperty("--flip-rotation-end", `${rotationAccum}deg`);
+						badge.classList.remove("coin-flip");
+						void badge.offsetWidth;
+						badge.classList.add("coin-flip");
+					}
+					
+					function isPng(buffer) {
+						if (buffer.byteLength < 8) return false;
+						const bytes = new Uint8Array(buffer.slice(0, 8));
+						return (
+						bytes[0] === 0x89 &&
+						bytes[1] === 0x50 &&
+						bytes[2] === 0x4e &&
+						bytes[3] === 0x47 &&
+						bytes[4] === 0x0d &&
+						bytes[5] === 0x0a &&
+						bytes[6] === 0x1a &&
+						bytes[7] === 0x0a
+						);
+					}
+					
+					function blobToDataUrl(blob) {
+						return new Promise((resolve) => {
+							if (!blob) return resolve("");
+							const reader = new FileReader();
+							reader.onloadend = () => resolve(reader.result || "");
+							reader.readAsDataURL(blob);
+							});
+						}
+						
+						function base64FromDataUrl(dataUrl) {
+							const idx = dataUrl.indexOf(",");
+							return idx >= 0 ? dataUrl.slice(idx + 1) : "";
+						}
+						
+						async function fetchFlagAsset(code) {
+							if (imageCache.has(code)) {
+								touchCache(code);
+								return imageCache.get(code);
+							}
+							try {
+								// default to .svg, but if you store gl as png, this still works (mime detection)
+								const response = await fetch(`assets/flags/${code}.svg`, { cache: "no-store" });
+								if (!response.ok) throw new Error("flag fetch failed");
+								const buffer = await response.arrayBuffer();
+								const mime = isPng(buffer) ? "image/png" : "image/svg+xml";
+								const blob = new Blob([buffer], { type: mime });
+								const url = URL.createObjectURL(blob);
+								const entry = { url, mime, blob, lastUsed: Date.now() };
+								imageCache.set(code, entry);
+								evictIfNeeded();
+								return entry;
+								} catch {
+									return null;
+								}
+							}
+							
+							async function loadFlagAsset(code) {
+								try {
+									return await fetchFlagAsset(code);
+									} catch {
+										return null;
+									}
+								}
+								
+								function prefetchNeighbor(direction) {
+									const total = countrySelect.options.length;
+									const nextIndex = (countrySelect.selectedIndex + direction + total) % total;
+									const code = countrySelect.options[nextIndex].value;
+									if (!imageCache.has(code)) fetchFlagAsset(code);
+								}
+								
+								function clearFlagVisual() {
+									flagImg.removeAttribute("src");
+									flagImg.classList.remove("visible");
+									flagImg.removeAttribute("alt");
+									currentAssetEntry = null;
+									currentCountryName = "";
+								}
+								
+								function applyFlagUrl(entry, name, code) {
+									
+									if (!entry) return;
+									
+									currentAssetEntry = entry;
+									
+									currentCountryName = name;
+									
+									const override = countryOverrides[code] || {};
+									
+									const scaleX = override.scaleX || override.scale || 1.0;
+									
+									const scaleY = override.scaleY || override.scale || 1.0;
+									
+									const offsetX = override.offsetX || 0;
+									
+									const offsetY = override.offsetY || 0;
+									
+									flagImg.classList.remove("visible");
+									
+									const circle = flagImg.parentElement;
+									
+									if (circle) circle.style.backgroundColor = override.bgColor || "#ffffff";
+									
+									flagImg.removeAttribute("alt");
+									
+									flagImg.onload = () => {
+										
+										flagImg.alt = `${name} flag`;
+										
+										flagImg.classList.add("visible");
+										
+										if (flagImg.naturalWidth && flagImg.naturalHeight) {
+											
+											entry.aspectRatio = flagImg.naturalWidth / flagImg.naturalHeight;
+											
+										}
+										
+										const aspect = entry.aspectRatio || 1.5;
+										
+										if (aspect >= 1) {
+											
+											flagImg.style.height = "100%";
+											
+											flagImg.style.width = "auto";
+											
+											} else {
+												
+												flagImg.style.width = "100%";
+												
+												flagImg.style.height = "auto";
+												
+											}
+											
+											flagImg.style.transform = `translate(-50%, -50%) translate(${offsetX}px, ${offsetY}px) scale(${scaleX}, ${scaleY})`;
+											
+											flagImg.style.objectPosition = "";
+											
+											};
+											
+											flagImg.src = entry.url;
+											
+										}
+										
+										function updateFlag() {
+											const countryCode = countrySelect.value;
+											const countryName = countrySelect.options[countrySelect.selectedIndex].text;
+											searchInput.value = countryName;
+											
+											const token = ++flipToken;
+											let pendingEntry = null;
+											let midReached = false;
+											
+											loadFlagAsset(countryCode).then((entry) => {
+												if (token !== flipToken) return;
+												pendingEntry = entry;
+												if (midReached) {
+													if (entry) applyFlagUrl(entry, countryName, countryCode);
+													else clearFlagVisual();
+												}
+												});
+												
+												triggerFlip();
+												
+												setTimeout(() => {
+													if (token !== flipToken) return;
+													midReached = true;
+													if (pendingEntry) applyFlagUrl(pendingEntry, countryName, countryCode);
+													else clearFlagVisual();
+													}, Math.round(flipDurationMs * 0.5));
+													
+													prefetchNeighbor(1);
+													prefetchNeighbor(-1);
+												}
+												
+												function findCountryByQuery(query) {
+													const q = query.trim().toLowerCase();
+													if (!q) return null;
+													let match = countryOptions.find((o) => o.text.toLowerCase() === q);
+													if (match) return match;
+													match = countryOptions.find((o) => o.text.toLowerCase().startsWith(q));
+													if (match) return match;
+													match = countryOptions.find((o) => o.text.toLowerCase().includes(q));
+													return match || null;
+												}
+												
+												let searchDebounce = null;
+												function trySelectByNameDebounced(query) {
+													clearTimeout(searchDebounce);
+													searchDebounce = setTimeout(() => {
+														const match = findCountryByQuery(query);
+														if (!match) return;
+														if (match.value === countrySelect.value) return;
+														countrySelect.value = match.value;
+														updateFlag();
+														}, 120);
+													}
+													
+													function downloadBlob(blob, filename) {
+														const url = URL.createObjectURL(blob);
+														const link = document.createElement("a");
+														link.href = url;
+														link.download = filename;
+														document.body.appendChild(link);
+														link.click();
+														link.remove();
+														URL.revokeObjectURL(url);
+													}
+													
+													// Pure SVG export (no foreignObject).
+													// This fixes broken colors in embed, and makes SVG portable.
+													async function buildPureBadgeSvg({ includeAnimation = false, includeShadow = true } = {}) {
+														const size = 220;
+														const border = 8;
+														const ringInset = 3;
+														const ringWidth = 5;
+														const starRadius = 90;
+														const starCount = 12;
+														const flagSize = 140;
+														const flagBorder = 6;
+														
+														const margin = includeShadow ? 20 : 1;
+														const canvasSize = size + border * 2;
+														const w = canvasSize + margin * 2;
+														const h = canvasSize + margin * 2;
+														const cx = w / 2;
+														const cy = h / 2;
+														
+														// Flag as data URL
+														let flagHref = "";
+														if (currentAssetEntry?.blob) {
+															const dataUrl = await blobToDataUrl(currentAssetEntry.blob);
+															flagHref = dataUrl; // includes mime, base64
+														}
+														
+														const code = countrySelect.value;
+														const override = countryOverrides[code] || {};
+														const scaleX = override.scaleX || override.scale || 1.0;
+														const scaleY = override.scaleY || override.scale || 1.0;
+														const offsetX = override.offsetX || 0;
+														const offsetY = override.offsetY || 0;
+														
+														// Calculate dimensions to mimic object-fit: cover
+														const aspect = currentAssetEntry?.aspectRatio || 1.5; // default to 3:2
+														let drawW, drawH;
+														
+														// Base dimensions that fill the circle (object-fit: cover)
+														if (aspect >= 1) { // Wide flag
+														drawH = flagSize;
+														drawW = flagSize * aspect;
+														} else { // Tall flag
+														drawW = flagSize;
+														drawH = flagSize / aspect;
+													}
+													
+													// Apply the custom scales
+													drawW *= scaleX;
+													drawH *= scaleY;
+													
+													const flagX = cx - drawW / 2 + offsetX;
+													const flagY = cy - drawH / 2 + offsetY;
+													
+													// Ring highlight: simple, stable gradient (not the CSS conic mask).
+													// You can make it fancier later, but this keeps it consistent everywhere.
+													const defs = [];
+													defs.push(`
+													<radialGradient id="ringGlow" cx="40%" cy="35%" r="70%">
+													<stop offset="0%" stop-color="rgba(255,255,255,0.0)"/>
+													<stop offset="55%" stop-color="rgba(255,255,255,0.0)"/>
+													<stop offset="100%" stop-color="rgba(255,255,255,0.35)"/>
+													</radialGradient>`);
+													
+													defs.push(`
+													<clipPath id="clipFlag">
+													<circle cx="${cx}" cy="${cy}" r="${flagSize / 2}" />
+													</clipPath>`);
+													
+													if (includeShadow) {
+														defs.push(`
+														<filter id="dropShadow" x="-50%" y="-50%" width="200%" height="200%">
+														<feDropShadow dx="0" dy="6" stdDeviation="10" flood-color="rgba(0,0,0,0.15)"/>
+														</filter>`);
+														defs.push(`
+														<filter id="innerShadow" x="-50%" y="-50%" width="200%" height="200%">
+														<feDropShadow dx="0" dy="3" stdDeviation="4" flood-color="rgba(0,0,0,0.25)"/>
+														</filter>`);
+													}
+													
+													let stars = "";
+													for (let i = 0; i < starCount; i++) {
+														const angleDeg = i * (360 / starCount) - 90;
+														const angle = (angleDeg * Math.PI) / 180;
+														const x = cx + Math.cos(angle) * starRadius;
+														const y = cy + Math.sin(angle) * starRadius;
+														stars += `<text x="${x}" y="${y}" text-anchor="middle" dominant-baseline="middle" font-family="Inter, system-ui, -apple-system, sans-serif" font-size="26" fill="#FFCC00">★</text>`;
+													}
+													
+													const animateCss = includeAnimation
+													? `
+													@keyframes coinFlipExport {
+														0% { transform: perspective(1200px) rotateY(0deg); }
+														30% { transform: perspective(1200px) rotateY(360deg); }
+														100% { transform: perspective(1200px) rotateY(360deg); }
+													}
+													.badge-content {
+														animation: coinFlipExport 3s cubic-bezier(0.68, -0.55, 0.27, 1.55) infinite;
+														transform-origin: ${cx}px ${cy}px;
+														}`
+														: "";
+														
+														const svgTitleId = "svgTitle-" + code;
+														
+														const svgDescId = "svgDesc-" + code;
+														
+														const headline = `EU Country Badge - ${currentCountryName}`;
+														
+														const description = `A professional-grade circular European Union badge featuring 12 gold stars and the official flag of ${currentCountryName} in the center. Optimized for origin labeling and European identity branding.`;
+														
+														const keywords = `EU, Badge, ${currentCountryName}, European Union, Flag, Origin, Icon, Identity`;
+														
+														const svg = `<?xml version="1.0" encoding="UTF-8"?>
+														
+														<svg xmlns="http://www.w3.org/2000/svg" width="${w}" height="${h}" viewBox="0 0 ${w} ${h}" role="img" aria-labelledby="${svgTitleId} ${svgDescId}">
+														
+														<title id="${svgTitleId}">${headline}</title>
+														
+														<desc id="${svgDescId}">${description}</desc>
+														
+														<metadata>
+														
+														<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:dc="http://purl.org/dc/elements/1.1/">
+														
+														<rdf:Description rdf:about="">
+														
+														<dc:title>${headline}</dc:title>
+														
+														<dc:description>${description}</dc:description>
+														
+														<dc:source>http://country-badges.eu/</dc:source>
+														
+														<dc:subject>
+														
+														<rdf:Bag>
+														
+														${keywords.split(",").map(k => `<rdf:li>${k.trim()}</rdf:li>`).join("\n				   					")}
+														
+														</rdf:Bag>
+														
+														</dc:subject>
+														
+														<dc:creator>Axel Wickman</dc:creator>
+														
+														</rdf:Description>
+														
+														</rdf:RDF>
+														
+														</metadata>
+														
+														<style>
+														
+														${animateCss}
+														
+														</style>								<defs>
+														
+														${defs.join("\n")}
+														
+														</defs>
+														
+														<g ${includeShadow ? `filter="url(#dropShadow)"` : ""}>
+														<g class="${includeAnimation ? "badge-content" : ""}">
+														
+														<!-- Outer white border -->												<circle cx="${cx}" cy="${cy}" r="${size / 2 + border}" fill="#ffffff"/>
+														
+														<!-- Blue disk -->
+														<circle cx="${cx}" cy="${cy}" r="${size / 2}" fill="#003399"/>
+														
+														<!-- Ring highlight (simple radial) -->
+														<path d="
+														M ${cx} ${cy}
+														m 0 ${-(size / 2 - ringInset)}
+														a ${size / 2 - ringInset} ${size / 2 - ringInset} 0 1 1 0 ${2 * (size / 2 - ringInset)}
+														a ${size / 2 - ringInset} ${size / 2 - ringInset} 0 1 1 0 ${-2 * (size / 2 - ringInset)}
+														m 0 ${ringWidth}
+														a ${size / 2 - ringInset - ringWidth} ${size / 2 - ringInset - ringWidth} 0 1 0 0 ${2 *
+														(size / 2 - ringInset - ringWidth)}
+														a ${size / 2 - ringInset - ringWidth} ${size / 2 - ringInset - ringWidth} 0 1 0 0 ${-2 *
+														(size / 2 - ringInset - ringWidth)}
+														"
+														fill="url(#ringGlow)" fill-rule="evenodd"/>
+														
+														<!-- Stars -->
+														${stars}
+														
+														<!-- Flag circle border -->
+														<g ${includeShadow ? `filter="url(#innerShadow)"` : ""}>
+														<circle cx="${cx}" cy="${cy}" r="${flagSize / 2 + flagBorder}" fill="#ffffff"/>
+														</g>
+														
+														<!-- Flag background for zoom-out edges -->
+														<circle cx="${cx}" cy="${cy}" r="${flagSize / 2}" fill="${override.bgColor || "#ffffff"}"/>
+														
+														<!-- Flag image clipped -->
+														${flagHref ? `<image href="${flagHref}" x="${flagX}" y="${flagY}" width="${drawW}" height="${drawH}" preserveAspectRatio="none" clip-path="url(#clipFlag)"/>` : ""}
+														</g>
+														</g>
+														</svg>`;
+														
+														return new Blob([svg], { type: "image/svg+xml" });
+													}
+													
+													async function exportBadgeSvg() {
+														const includeAnimation = embedAnimateToggle?.checked ?? false;
+														const includeShadow = includeShadowToggle?.checked ?? true;
+														const blob = await buildPureBadgeSvg({ includeAnimation, includeShadow });
+														const code = countrySelect.value;
+														downloadBlob(blob, `badge-${code}.svg`);
+													}
+													
+													async function exportBadgePng() {
+														const badgeSize = 220;
+														const borderSize = 8;
+														const ringInset = 3;
+														const ringWidth = 5;
+														const starRadius = 90;
+														const starSize = 26;
+														const flagSize = 140;
+														
+														const targetSize = 512;
+														const includeShadow = includeShadowToggle?.checked ?? true;
+														const margin = includeShadow ? 20 : 1;
+														const totalBaseSize = badgeSize + borderSize * 2 + margin * 2;
+														const badgeScale = targetSize / totalBaseSize;
+														
+														const canvasWidth = targetSize;
+														const canvasHeight = targetSize;
+														const centerX = canvasWidth / 2;
+														const centerY = canvasHeight / 2;
+														
+														const canvas = document.createElement("canvas");
+														canvas.width = canvasWidth;
+														canvas.height = canvasHeight;
+														const ctx = canvas.getContext("2d");
+														
+														const radius = (badgeSize * badgeScale) / 2;
+														const border = borderSize * badgeScale;
+														
+														ctx.clearRect(0, 0, canvasWidth, canvasHeight);
+														
+														ctx.save();
+														if (includeShadow) {
+															ctx.shadowColor = "rgba(0,0,0,0.15)";
+															ctx.shadowBlur = 20 * badgeScale;
+															ctx.shadowOffsetY = 6 * badgeScale;
+														}
+														ctx.beginPath();
+														ctx.arc(centerX, centerY, radius + border, 0, Math.PI * 2);
+														ctx.fillStyle = "#ffffff";
+														ctx.fill();
+														ctx.restore();
+														
+														ctx.beginPath();
+														ctx.arc(centerX, centerY, radius, 0, Math.PI * 2);
+														ctx.fillStyle = "#003399";
+														ctx.fill();
+														
+														ctx.beginPath();
+														ctx.arc(centerX, centerY, radius - ringInset * badgeScale, 0, Math.PI * 2);
+														ctx.arc(
+														centerX,
+														centerY,
+														radius - (ringInset + ringWidth) * badgeScale,
+														0,
+														Math.PI * 2,
+														true
+														);
+														ctx.fillStyle = "rgba(255,255,255,0.35)";
+														ctx.fill();
+														
+														ctx.fillStyle = "#ffcc00";
+														ctx.font = `${starSize * badgeScale}px "Inter", sans-serif`;
+														ctx.textAlign = "center";
+														ctx.textBaseline = "middle";
+														for (let i = 0; i < 12; i++) {
+															const angle = (i * 30 - 90) * (Math.PI / 180);
+															const x = centerX + Math.cos(angle) * starRadius * badgeScale;
+															const y = centerY + Math.sin(angle) * starRadius * badgeScale;
+															ctx.fillText("★", x, y);
+														}
+														
+														const flagRadius = (flagSize * badgeScale) / 2;
+														
+														// flag border shadow
+														ctx.save();
+														if (includeShadow) {
+															ctx.shadowColor = "rgba(0,0,0,0.25)";
+															ctx.shadowBlur = 6 * badgeScale;
+															ctx.shadowOffsetY = 2 * badgeScale;
+														}
+														ctx.beginPath();
+														ctx.arc(centerX, centerY, flagRadius + 6 * badgeScale, 0, Math.PI * 2);
+														ctx.fillStyle = "#ffffff";
+														ctx.fill();
+														ctx.restore();
+														
+														const code = countrySelect.value;
+														const override = countryOverrides[code] || {};
+														
+														// flag background
+														ctx.beginPath();
+														ctx.arc(centerX, centerY, flagRadius, 0, Math.PI * 2);
+														ctx.fillStyle = override.bgColor || "#ffffff";
+														ctx.fill();
+														
+														ctx.save();
+														ctx.beginPath();
+														ctx.arc(centerX, centerY, flagRadius, 0, Math.PI * 2);
+														ctx.clip();
+														
+														if (currentAssetEntry) {
+															const code = countrySelect.value;
+															const override = countryOverrides[code] || {};
+															const scaleX = override.scaleX || override.scale || 1.0;
+															const scaleY = override.scaleY || override.scale || 1.0;
+															const customOffsetX = (override.offsetX || 0) * badgeScale;
+															const customOffsetY = (override.offsetY || 0) * badgeScale;
+															
+															const aspect = currentAssetEntry.aspectRatio || 1.5;
+															const baseDiameter = flagRadius * 2;
+															let drawW, drawH;
+															
+															if (aspect >= 1) { // Wide
+															drawH = baseDiameter;
+															drawW = drawH * aspect;
+															} else {
+																drawW = baseDiameter;
+																drawH = drawW / aspect;
+															}
+															
+															drawW *= scaleX;
+															drawH *= scaleY;
+															
+															const dataUrl = await blobToDataUrl(currentAssetEntry.blob);
+															const img = new Image();
+															await new Promise((resolve) => {
+																img.onload = resolve;
+																img.src = dataUrl;
+																});
+																ctx.drawImage(img, centerX - drawW / 2 + customOffsetX, centerY - drawH / 2 + customOffsetY, drawW, drawH);
+															}
+															ctx.restore();
+															
+															canvas.toBlob((blob) => {
+																if (!blob) return;
+																const code = countrySelect.value;
+																downloadBlob(blob, `badge-${code}.png`);
+																}, "image/png");
+															}
+															
+															async function updateEmbedCode() {
+																// Embed uses the pure SVG now
+																const svgBlob = await buildPureBadgeSvg({
+																	includeAnimation: embedAnimateToggle?.checked ?? false,
+																	includeShadow: includeShadowToggle?.checked ?? true,
+																	});
+																	
+																	const dataUrl = await blobToDataUrl(svgBlob);
+																	
+																	// Some sites hate raw svg+xml in data URLs. Base64 is safer.
+																	// dataUrl from FileReader is already base64 for blobs, but keep it consistent.
+																	const base64 = base64FromDataUrl(dataUrl);
+																	const safe = `data:image/svg+xml;base64,${base64}`;
+																	
+																	const alt = `EU Country Badge - ${currentCountryName}`;
+																	const headline = `EU Country Badge - ${currentCountryName}`;
+																	embedTextarea.value = `<img src="${safe}" alt="${alt}" title="${headline}" data-source="http://country-badges.eu/">`;
+																}
+																
+																let lastFocused = null;
+																function showEmbedModal() {
+																	lastFocused = document.activeElement;
+																	updateEmbedCode();
+																	exportModal.classList.add("visible");
+																	exportModal.setAttribute("aria-hidden", "false");
+																	setTimeout(() => exportModalClose.focus(), 0);
+																}
+																
+																function closeEmbedModal() {
+																	exportModal.classList.remove("visible");
+																	exportModal.setAttribute("aria-hidden", "true");
+																	if (lastFocused && typeof lastFocused.focus === "function") lastFocused.focus();
+																}
+																
+																function showAboutModal() {
+																	lastFocused = document.activeElement;
+																	aboutModal.classList.add("visible");
+																	aboutModal.setAttribute("aria-hidden", "false");
+																	setTimeout(() => aboutModalClose.focus(), 0);
+																}
+																
+																function closeAboutModal() {
+																	aboutModal.classList.remove("visible");
+																	aboutModal.setAttribute("aria-hidden", "true");
+																	if (lastFocused && typeof lastFocused.focus === "function") lastFocused.focus();
+																}
+																
+																// Export menu show/hide
+																let exportVisible = false;
+																function setExportVisible(next) {
+																	exportVisible = !!next;
+																	exportMenu.classList.toggle("visible", exportVisible);
+																	exportExtrasControl.classList.toggle("visible", exportVisible);
+																	exportMenu.setAttribute("aria-hidden", exportVisible ? "false" : "true");
+																	exportExtrasControl.setAttribute("aria-hidden", exportVisible ? "false" : "true");
+																}
+																
+																exportToggle.addEventListener("click", () => {
+																	setExportVisible(!exportVisible);
+																	});
+																	
+																	document.addEventListener("pointerdown", (event) => {
+																		if (!exportVisible) return;
+																		if (exportPanel.contains(event.target)) return;
+																		setExportVisible(false);
+																		});
+																		
+																		// Wire exports
+																		exportSvgBtn.addEventListener("click", exportBadgeSvg);
+																		exportPngBtn.addEventListener("click", exportBadgePng);
+																		exportEmbedBtn.addEventListener("click", showEmbedModal);
+																		
+																		exportModalClose.addEventListener("click", closeEmbedModal);
+																		
+																		aboutToggle.addEventListener("click", showAboutModal);
+																		aboutModalClose.addEventListener("click", closeAboutModal);
+																		
+																		copyEmbedBtn.addEventListener("click", async () => {
+																			if (!embedTextarea.value) return;
+																			try {
+																				if (navigator.clipboard) await navigator.clipboard.writeText(embedTextarea.value);
+																				else {
+																					embedTextarea.select();
+																					document.execCommand("copy");
+																				}
+																				} catch {
+																					embedTextarea.select();
+																					document.execCommand("copy");
+																				}
+																				});
+																				
+																				embedAnimateToggle.addEventListener("change", () => {
+																					if (exportModal.classList.contains("visible")) updateEmbedCode();
+																					});
+																					includeShadowToggle?.addEventListener("change", () => {
+																						if (exportModal.classList.contains("visible")) updateEmbedCode();
+																						});
+																						
+																						exportModal.addEventListener("click", (event) => {
+																							if (event.target === exportModal) closeEmbedModal();
+																							});
+																							
+																							aboutModal.addEventListener("click", (event) => {
+																								if (event.target === aboutModal) closeAboutModal();
+																								});
+																								
+																								document.addEventListener("keydown", (event) => {
+																									if (event.key === "Escape") {
+																										if (exportModal.classList.contains("visible")) closeEmbedModal();
+																										else if (aboutModal.classList.contains("visible")) closeAboutModal();
+																										else setExportVisible(false);
+																									}
+																									});
+																									// Search input
+																									searchInput.addEventListener("input", (event) => {
+																										trySelectByNameDebounced(event.target.value);
+																										});
+																										
+																										function clearIfCurrent() {
+																											const current = countrySelect.options[countrySelect.selectedIndex].text;
+																											if (searchInput.value.trim() === current) searchInput.value = "";
+																										}
+																										searchInput.addEventListener("focus", clearIfCurrent);
+																										searchInput.addEventListener("click", clearIfCurrent);
+																										
+																										searchInput.addEventListener("blur", () => {
+																											const current = countrySelect.options[countrySelect.selectedIndex].text;
+																											const match = findCountryByQuery(searchInput.value);
+																											if (!match || match.value === countrySelect.value) {
+																												searchInput.value = current;
+																												return;
+																											}
+																											countrySelect.value = match.value;
+																											updateFlag();
+																											});
+																											
+																											// Country stepping + swipe
+																											function stepCountry(delta) {
+																												const total = countrySelect.options.length;
+																												const nextIndex = (countrySelect.selectedIndex + delta + total) % total;
+																												countrySelect.selectedIndex = nextIndex;
+																												updateFlag();
+																											}
+																											
+																											document.getElementById("prevCountry").addEventListener("click", () => stepCountry(-1));
+																											document.getElementById("nextCountry").addEventListener("click", () => stepCountry(1));
+																											
+																											const switcher = document.getElementById("countrySwitcher");
+																											
+																											function addSwipeListener(element, ignoreElements = []) {
+																												let startX = null;
+																												element.addEventListener("pointerdown", (event) => {
+																													if (ignoreElements.some(sel => event.target.closest(sel))) return;
+																													startX = event.clientX;
+																													try { element.setPointerCapture(event.pointerId); } catch {}
+																													});
+																													element.addEventListener("pointerup", (event) => {
+																														if (startX === null) return;
+																														const deltaX = event.clientX - startX;
+																														if (Math.abs(deltaX) > 40) {
+																															// Reverse: swipe right (deltaX > 0) -> next, swipe left (deltaX < 0) -> prev
+																															stepCountry(deltaX > 0 ? 1 : -1);
+																														}
+																														startX = null;
+																														});
+																														element.addEventListener("pointercancel", () => { startX = null; });
+																													}
+																													
+																													addSwipeListener(switcher, ["input", "button"]);
+																													addSwipeListener(badge);
+																													
+																													// Init
+																													const randomIndex = Math.floor(Math.random() * countrySelect.options.length);
+																													countrySelect.selectedIndex = randomIndex;
+																													updateFlag();
+		</script>
+	</body>
+</html>
