@@ -1,6 +1,6 @@
 # Country Badges EU
 
-![Country Badges EU](assets/og-image.png)
+![Country Badges EU](site/assets/og-image.png)
 
 Making "Buy European" easy and recognizable.
 
