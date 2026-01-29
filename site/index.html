@@ -490,9 +490,7 @@
         object-fit: cover; /* Fallback */
         filter: saturate(1.05);
         opacity: 0;
-        transition:
-          opacity 0.25s ease,
-          transform 0.25s ease;
+        transition: opacity 0.25s ease;
         position: absolute;
         left: 50%;
         top: 50%;
@@ -700,7 +698,8 @@
           </p>
           <p>
             You can export them as <strong>SVG</strong> for resolution
-            independence, <strong>PNG</strong> for general use, or as a direct
+            independence, <strong>PNG</strong>
+            for general use, or as a direct
             <strong>Embed code</strong>.
           </p>
           <p>
@@ -812,12 +811,13 @@
         sk: { offsetX: 10 },
         cy: { scale: 0.85, offsetX: -7 },
         fi: { bgColor: "#ffffff" },
-        gr: { offsetX: 15, bgColor: "#0D5EAF" },
+        gr: { offsetX: 30, bgColor: "#0D5EAF" },
         ie: { scaleX: 0.8, scaleY: 1.0, bgColor: "#ffffff" },
         si: { offsetX: 34 },
         gl: { offsetX: 23 },
         li: { offsetX: 40 },
         tr: { offsetX: 10 },
+        me: { scaleX: 1.15, scaleY: 1.15 },
       };
 
       let flipToken = 0;
@@ -1113,26 +1113,26 @@
         // You can make it fancier later, but this keeps it consistent everywhere.
         const defs = [];
         defs.push(`
-													<radialGradient id="ringGlow" cx="40%" cy="35%" r="70%">
-													<stop offset="0%" stop-color="rgba(255,255,255,0.0)"/>
-													<stop offset="55%" stop-color="rgba(255,255,255,0.0)"/>
-													<stop offset="100%" stop-color="rgba(255,255,255,0.35)"/>
-													</radialGradient>`);
+																	<radialGradient id="ringGlow" cx="40%" cy="35%" r="70%">
+																	<stop offset="0%" stop-color="rgba(255,255,255,0.0)"/>
+																	<stop offset="55%" stop-color="rgba(255,255,255,0.0)"/>
+																	<stop offset="100%" stop-color="rgba(255,255,255,0.35)"/>
+																	</radialGradient>`);
 
         defs.push(`
-													<clipPath id="clipFlag">
-													<circle cx="${cx}" cy="${cy}" r="${flagSize / 2}" />
-													</clipPath>`);
+																	<clipPath id="clipFlag">
+																	<circle cx="${cx}" cy="${cy}" r="${flagSize / 2}" />
+																	</clipPath>`);
 
         if (includeShadow) {
           defs.push(`
-														<filter id="dropShadow" x="-50%" y="-50%" width="200%" height="200%">
-														<feDropShadow dx="0" dy="6" stdDeviation="10" flood-color="rgba(0,0,0,0.15)"/>
-														</filter>`);
+																		<filter id="dropShadow" x="-50%" y="-50%" width="200%" height="200%">
+																		<feDropShadow dx="0" dy="6" stdDeviation="10" flood-color="rgba(0,0,0,0.15)"/>
+																		</filter>`);
           defs.push(`
-														<filter id="innerShadow" x="-50%" y="-50%" width="200%" height="200%">
-														<feDropShadow dx="0" dy="3" stdDeviation="4" flood-color="rgba(0,0,0,0.25)"/>
-														</filter>`);
+																		<filter id="innerShadow" x="-50%" y="-50%" width="200%" height="200%">
+																		<feDropShadow dx="0" dy="3" stdDeviation="4" flood-color="rgba(0,0,0,0.25)"/>
+																		</filter>`);
         }
 
         let stars = "";
@@ -1146,15 +1146,15 @@
 
         const animateCss = includeAnimation
           ? `
-													@keyframes coinFlipExport {
-														0% { transform: perspective(1200px) rotateY(0deg); }
-														30% { transform: perspective(1200px) rotateY(360deg); }
-														100% { transform: perspective(1200px) rotateY(360deg); }
-													}
-													.badge-content {
-														animation: coinFlipExport 3s cubic-bezier(0.68, -0.55, 0.27, 1.55) infinite;
-														transform-origin: ${cx}px ${cy}px;
-														}`
+																	@keyframes coinFlipExport {
+																		0% { transform: perspective(1200px) rotateY(0deg); }
+																		30% { transform: perspective(1200px) rotateY(360deg); }
+																		100% { transform: perspective(1200px) rotateY(360deg); }
+																	}
+																	.badge-content {
+																		animation: coinFlipExport 3s cubic-bezier(0.68, -0.55, 0.27, 1.55) infinite;
+																		transform-origin: ${cx}px ${cy}px;
+																		}`
           : "";
 
         const svgTitleId = "svgTitle-" + code;
@@ -1168,96 +1168,98 @@
         const keywords = `EU, Badge, ${currentCountryName}, European Union, Flag, Origin, Icon, Identity`;
 
         const svg = `<?xml version="1.0" encoding="UTF-8"?>
-														
-														<svg xmlns="http://www.w3.org/2000/svg" width="${w}" height="${h}" viewBox="0 0 ${w} ${h}" role="img" aria-labelledby="${svgTitleId} ${svgDescId}">
-														
-														<title id="${svgTitleId}">${headline}</title>
-														
-														<desc id="${svgDescId}">${description}</desc>
-														
-														<metadata>
-														
-														<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:dc="http://purl.org/dc/elements/1.1/">
-														
-														<rdf:Description rdf:about="">
-														
-														<dc:title>${headline}</dc:title>
-														
-														<dc:description>${description}</dc:description>
-														
-														<dc:source>http://country-badges.eu/</dc:source>
-														
-														<dc:subject>
-														
-														<rdf:Bag>
-														
-														${keywords
-                              .split(",")
-                              .map((k) => `<rdf:li>${k.trim()}</rdf:li>`)
-                              .join("\n				   					")}
-														
-														</rdf:Bag>
-														
-														</dc:subject>
-														
-														<dc:creator>Axel Wickman</dc:creator>
-														
-														</rdf:Description>
-														
-														</rdf:RDF>
-														
-														</metadata>
-														
-														<style>
-														
-														${animateCss}
-														
-														</style>								<defs>
-														
-														${defs.join("\n")}
-														
-														</defs>
-														
-														<g ${includeShadow ? `filter="url(#dropShadow)"` : ""}>
-														<g class="${includeAnimation ? "badge-content" : ""}">
-														
-														<!-- Outer white border -->												<circle cx="${cx}" cy="${cy}" r="${size / 2 + border}" fill="#ffffff"/>
-														
-														<!-- Blue disk -->
-														<circle cx="${cx}" cy="${cy}" r="${size / 2}" fill="#003399"/>
-														
-														<!-- Ring highlight (simple radial) -->
-														<path d="
-														M ${cx} ${cy}
-														m 0 ${-(size / 2 - ringInset)}
-														a ${size / 2 - ringInset} ${size / 2 - ringInset} 0 1 1 0 ${2 * (size / 2 - ringInset)}
-														a ${size / 2 - ringInset} ${size / 2 - ringInset} 0 1 1 0 ${-2 * (size / 2 - ringInset)}
-														m 0 ${ringWidth}
-														a ${size / 2 - ringInset - ringWidth} ${size / 2 - ringInset - ringWidth} 0 1 0 0 ${
-                              2 * (size / 2 - ringInset - ringWidth)
-                            }
-														a ${size / 2 - ringInset - ringWidth} ${size / 2 - ringInset - ringWidth} 0 1 0 0 ${
-                              -2 * (size / 2 - ringInset - ringWidth)
-                            }
-														"
-														fill="url(#ringGlow)" fill-rule="evenodd"/>
-														
-														<!-- Stars -->
-														${stars}
-														
-														<!-- Flag circle border -->
-														<g ${includeShadow ? `filter="url(#innerShadow)"` : ""}>
-														<circle cx="${cx}" cy="${cy}" r="${flagSize / 2 + flagBorder}" fill="#ffffff"/>
-														</g>
-														
-														<!-- Flag background for zoom-out edges -->
-														<circle cx="${cx}" cy="${cy}" r="${flagSize / 2}" fill="${override.bgColor || "#ffffff"}"/>
-														
-														<!-- Flag image clipped -->
-														${flagHref ? `<image href="${flagHref}" x="${flagX}" y="${flagY}" width="${drawW}" height="${drawH}" preserveAspectRatio="none" clip-path="url(#clipFlag)"/>` : ""}
-														</g>
-														</g>
-														</svg>`;
+																		
+																		<svg xmlns="http://www.w3.org/2000/svg" width="${w}" height="${h}" viewBox="0 0 ${w} ${h}" role="img" aria-labelledby="${svgTitleId} ${svgDescId}">
+																		
+																		<title id="${svgTitleId}">${headline}</title>
+																		
+																		<desc id="${svgDescId}">${description}</desc>
+																		
+																		<metadata>
+																		
+																		<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:dc="http://purl.org/dc/elements/1.1/">
+																		
+																		<rdf:Description rdf:about="">
+																		
+																		<dc:title>${headline}</dc:title>
+																		
+																		<dc:description>${description}</dc:description>
+																		
+																		<dc:source>http://country-badges.eu/</dc:source>
+																		
+																		<dc:subject>
+																		
+																		<rdf:Bag>
+																		
+																		${keywords
+                                      .split(",")
+                                      .map(
+                                        (k) => `<rdf:li>${k.trim()}</rdf:li>`,
+                                      )
+                                      .join("\n				   					")}
+																		
+																		</rdf:Bag>
+																		
+																		</dc:subject>
+																		
+																		<dc:creator>Axel Wickman</dc:creator>
+																		
+																		</rdf:Description>
+																		
+																		</rdf:RDF>
+																		
+																		</metadata>
+																		
+																		<style>
+																		
+																		${animateCss}
+																		
+																		</style>								<defs>
+																		
+																		${defs.join("\n")}
+																		
+																		</defs>
+																		
+																		<g ${includeShadow ? `filter="url(#dropShadow)"` : ""}>
+																		<g class="${includeAnimation ? "badge-content" : ""}">
+																		
+																		<!-- Outer white border -->												<circle cx="${cx}" cy="${cy}" r="${size / 2 + border}" fill="#ffffff"/>
+																		
+																		<!-- Blue disk -->
+																		<circle cx="${cx}" cy="${cy}" r="${size / 2}" fill="#003399"/>
+																		
+																		<!-- Ring highlight (simple radial) -->
+																		<path d="
+																		M ${cx} ${cy}
+																		m 0 ${-(size / 2 - ringInset)}
+																		a ${size / 2 - ringInset} ${size / 2 - ringInset} 0 1 1 0 ${2 * (size / 2 - ringInset)}
+																		a ${size / 2 - ringInset} ${size / 2 - ringInset} 0 1 1 0 ${-2 * (size / 2 - ringInset)}
+																		m 0 ${ringWidth}
+																		a ${size / 2 - ringInset - ringWidth} ${size / 2 - ringInset - ringWidth} 0 1 0 0 ${
+                                      2 * (size / 2 - ringInset - ringWidth)
+                                    }
+																		a ${size / 2 - ringInset - ringWidth} ${size / 2 - ringInset - ringWidth} 0 1 0 0 ${
+                                      -2 * (size / 2 - ringInset - ringWidth)
+                                    }
+																		"
+																		fill="url(#ringGlow)" fill-rule="evenodd"/>
+																		
+																		<!-- Stars -->
+																		${stars}
+																		
+																		<!-- Flag circle border -->
+																		<g ${includeShadow ? `filter="url(#innerShadow)"` : ""}>
+																		<circle cx="${cx}" cy="${cy}" r="${flagSize / 2 + flagBorder}" fill="#ffffff"/>
+																		</g>
+																		
+																		<!-- Flag background for zoom-out edges -->
+																		<circle cx="${cx}" cy="${cy}" r="${flagSize / 2}" fill="${override.bgColor || "#ffffff"}"/>
+																		
+																		<!-- Flag image clipped -->
+																		${flagHref ? `<image href="${flagHref}" x="${flagX}" y="${flagY}" width="${drawW}" height="${drawH}" preserveAspectRatio="none" clip-path="url(#clipFlag)"/>` : ""}
+																		</g>
+																		</g>
+																		</svg>`;
 
         return new Blob([svg], { type: "image/svg+xml" });
       }
